@@ -1,1 +1,0 @@
-/home/runner/work/NGFix/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ -Ofast -lrt -std=c++20 -DHAVE_CXX0X -march=native -fpic -w -fopenmp -ftree-vectorize -ftree-vectorizer-verbose=0 -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/build_hnsw_ngfix.dir/link.d CMakeFiles/build_hnsw_ngfix.dir/build_hnsw_ngfix.cc.o -o build_hnsw_ngfix
