@@ -557,6 +557,66 @@ public:
         }
     }
 
+    // NGFix method based on 2-hop neighbors
+    // For each point u:
+    // 1. Calculate average distance d to its bottom (base graph) neighbors
+    // 2. Find all 2-hop neighbors
+    // 3. Add NGFix edge to 2-hop neighbors within 1.1*d threshold
+    void NGFixBy2Hop(id_t u) {
+        // Step 1: Calculate average distance to bottom neighbors
+        auto [base_ids, base_sz, base_st] = getBaseGraphNeighbors(u);
+        if (base_sz == 0) {
+            return; // No bottom neighbors, skip
+        }
+
+        float total_dist = 0.0f;
+        for (int i = base_st; i < base_st + base_sz; ++i) {
+            total_dist += getDist(u, base_ids[i]);
+        }
+        float avg_dist = total_dist / base_sz;
+        float threshold = avg_dist * 1.1f;
+
+        // Step 2: Find all 2-hop neighbors
+        std::unordered_set<id_t> two_hop_neighbors;
+        std::unordered_set<id_t> visited;
+        visited.insert(u);
+
+        // First hop: get all direct bottom neighbors
+        for (int i = base_st; i < base_st + base_sz; ++i) {
+            id_t neighbor1 = base_ids[i];
+            visited.insert(neighbor1);
+
+            // Second hop: get bottom neighbors of each direct neighbor
+            auto [neighbor_base_ids, neighbor_base_sz, neighbor_base_st] = getBaseGraphNeighbors(neighbor1);
+            for (int j = neighbor_base_st; j < neighbor_base_st + neighbor_base_sz; ++j) {
+                id_t neighbor2 = neighbor_base_ids[j];
+                if (visited.find(neighbor2) == visited.end()) {
+                    two_hop_neighbors.insert(neighbor2);
+                }
+            }
+        }
+
+        // Step 3: Add NGFix edges to 2-hop neighbors within threshold
+        std::unique_lock <std::shared_mutex> lock(node_locks[u]);
+        for (id_t v : two_hop_neighbors) {
+            float dist_u_v = getDist(u, v);
+            if (dist_u_v <= threshold) {
+                Graph[u].add_ngfix_neighbors(v, EH_INF, MEX);
+            }
+        }
+    }
+
+    // Batch version: Apply NGFixBy2Hop to all nodes in parallel
+    void NGFixBy2HopAll(size_t Threads = 32) {
+        #pragma omp parallel for schedule(dynamic) num_threads(Threads)
+        for(size_t i = 0; i < n; ++i) {
+            if(i % 100000 == 0) {
+                std::cout << "Processing node " << i << "\n";
+            }
+            NGFixBy2Hop(i);
+        }
+    }
+
     // return S = {v | delta(v, q) < delta(u, q)}
     std::vector<id_t> searchCloserPoints(T* query_data, size_t ef, size_t u, size_t& ndc) {
         // Search_PriorityQueue q0(ef, visited_list_pool_);
