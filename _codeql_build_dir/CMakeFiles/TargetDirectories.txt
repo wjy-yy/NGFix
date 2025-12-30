@@ -1,0 +1,14 @@
+/home/runner/work/NGFix/NGFix/_codeql_build_dir/CMakeFiles/edit_cache.dir
+/home/runner/work/NGFix/NGFix/_codeql_build_dir/CMakeFiles/rebuild_cache.dir
+/home/runner/work/NGFix/NGFix/_codeql_build_dir/test/CMakeFiles/build_hnsw_ngfix.dir
+/home/runner/work/NGFix/NGFix/_codeql_build_dir/test/CMakeFiles/build_hnsw_ngfix_aknn.dir
+/home/runner/work/NGFix/NGFix/_codeql_build_dir/test/CMakeFiles/search_hnsw_ngfix.dir
+/home/runner/work/NGFix/NGFix/_codeql_build_dir/test/CMakeFiles/build_hnsw_bottom.dir
+/home/runner/work/NGFix/NGFix/_codeql_build_dir/test/CMakeFiles/test_hnsw_ngfix_insertion.dir
+/home/runner/work/NGFix/NGFix/_codeql_build_dir/test/CMakeFiles/test_hnsw_ngfix_deletion.dir
+/home/runner/work/NGFix/NGFix/_codeql_build_dir/test/CMakeFiles/test_ngfix_2hop.dir
+/home/runner/work/NGFix/NGFix/_codeql_build_dir/test/CMakeFiles/build_hnsw_bottom_rabitq.dir
+/home/runner/work/NGFix/NGFix/_codeql_build_dir/test/CMakeFiles/build_hnsw_ngfix_rabitq.dir
+/home/runner/work/NGFix/NGFix/_codeql_build_dir/test/CMakeFiles/search_hnsw_ngfix_rabitq.dir
+/home/runner/work/NGFix/NGFix/_codeql_build_dir/test/CMakeFiles/edit_cache.dir
+/home/runner/work/NGFix/NGFix/_codeql_build_dir/test/CMakeFiles/rebuild_cache.dir
