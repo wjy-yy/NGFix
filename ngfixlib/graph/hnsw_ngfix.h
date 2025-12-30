@@ -570,7 +570,8 @@ public:
         }
 
         float total_dist = 0.0f;
-        for (int i = base_st; i < base_st + base_sz; ++i) {
+        size_t end_idx = base_st + base_sz;
+        for (size_t i = base_st; i < end_idx; ++i) {
             total_dist += getDist(u, base_ids[i]);
         }
         float avg_dist = total_dist / base_sz;
@@ -582,13 +583,14 @@ public:
         visited.insert(u);
 
         // First hop: get all direct bottom neighbors
-        for (int i = base_st; i < base_st + base_sz; ++i) {
+        for (size_t i = base_st; i < end_idx; ++i) {
             id_t neighbor1 = base_ids[i];
             visited.insert(neighbor1);
 
             // Second hop: get bottom neighbors of each direct neighbor
             auto [neighbor_base_ids, neighbor_base_sz, neighbor_base_st] = getBaseGraphNeighbors(neighbor1);
-            for (int j = neighbor_base_st; j < neighbor_base_st + neighbor_base_sz; ++j) {
+            size_t neighbor_end_idx = neighbor_base_st + neighbor_base_sz;
+            for (size_t j = neighbor_base_st; j < neighbor_end_idx; ++j) {
                 id_t neighbor2 = neighbor_base_ids[j];
                 if (visited.find(neighbor2) == visited.end()) {
                     two_hop_neighbors.insert(neighbor2);

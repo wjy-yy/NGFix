@@ -8,7 +8,7 @@ using namespace ngfixlib;
 int main(int argc, char* argv[])
 {
     std::unordered_map<std::string, std::string> paths;
-    for (int i = 0; i < argc; i++) {
+    for (int i = 0; i < argc - 1; i++) {
         std::string arg = argv[i];
         if (arg == "--base_graph_path")
             paths["base_graph_path"] = argv[i + 1];
